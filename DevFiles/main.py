@@ -19,10 +19,11 @@ def main():
             logger.error("Failed to start Chrome.")
             sys.exit(1)
 
-        if not chrome_handler.select_profile(profile_index=int(config.chrome_config.profile_index)):
-            logger.error("Failed to select profile.")
-            chrome_handler.kill_all_chrome()
-            sys.exit(1)
+        if str(config.chrome_config.direct_chrome).lower() != 'true':
+            if not chrome_handler.select_profile(profile_index=int(config.chrome_config.profile_index)):
+                logger.error("Failed to select profile.")
+                chrome_handler.kill_all_chrome()
+                sys.exit(1)
 
         if not chrome_handler.maximise_chrome():
             logger.error("Failed to maximize Chrome.")
